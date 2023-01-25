@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
     public void AddPointsToCurrentScore(int points)
     {
         pointSystem.AddPointsToCurrentScore(points);
+        Debug.Log("Points added");
     }
 
     public void StartGame()
