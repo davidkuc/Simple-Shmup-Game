@@ -22,16 +22,17 @@ public class SpawningManager : MonoBehaviour
     }
 
     [ContextMenu("Spawn Enemy")]
-    private void SpawnEnemy()
+    public void SpawnEnemy()
     {
         var enemy = enemyPool.Spawn();
+        enemy.SetManager(this);
         enemy.transform.position = spawningPoints[GetRandomIndex()].transform.position;
         enemy.StartMoving();
-
     }
 
-    private void DespawnEnemy(Enemy enemy)
+    public void DespawnEnemy(Enemy enemy)
     {
+        enemy.UnSetManager();
         enemy.transform.position = despawnPosition;
         enemyPool.Despawn(enemy);
         enemy.StopMoving();

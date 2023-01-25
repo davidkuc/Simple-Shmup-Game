@@ -1,20 +1,16 @@
+using System;
 using UnityEngine;
 using Zenject;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class Enemy : MonoBehaviour
 {
     [SerializeField] EnemyData_SO enemyData_SO;
 
-    DataManager dataManager;
+    SpawningManager spawningManager;
 
     EnemyMovement movement;
     HPSystem hpSystem;
-
-    [Inject]
-    public void Setup(DataManager dataManager)
-    {
-        this.dataManager = dataManager;
-    }
 
     private void Awake()
     {
@@ -44,9 +40,10 @@ public class Enemy : MonoBehaviour
         if (hpSystem.IsDead) Die();
     }
 
+    [ContextMenu("Die")]
     private void Die()
     {
-        // Pooling stuff, should go back where he came from
+        spawningManager.DespawnEnemy(this);
     }
 
     public void ResetPosition(Vector2 position)
@@ -54,9 +51,19 @@ public class Enemy : MonoBehaviour
         transform.position = position;
     }
 
+    public void SetManager(SpawningManager spawningManager)
+    {
+        this.spawningManager = spawningManager;
+    }
+
+    public void UnSetManager()
+    {
+        this.spawningManager = null;
+    }
+
     public class Pool : MonoMemoryPool<Enemy>
     {
-        //protected override void Reinitialize(Vector2 resetPosition, Enemy item)
+        //protected override void Reinitialize(SpawningManager spawningManager, Enemy item)
         //{
         //    base.Reinitialize(resetPosition, item);
         //    item.ResetPosition(resetPosition);
