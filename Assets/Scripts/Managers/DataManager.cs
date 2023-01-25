@@ -9,8 +9,6 @@ public class DataManager : MonoBehaviour
 
     SaveSystem saveSystem;
 
-    PlayerDataStructure playerDataStructure;
-
     public PlayerData_SO PlayerData_SO => playerData_SO;
 
     private void Awake()
@@ -20,35 +18,32 @@ public class DataManager : MonoBehaviour
 
     public void SaveData()
     {
-        if (playerDataStructure == null)
-        {
-            Debug.Log("Creating new player data structure on SaveData()");
-            playerDataStructure = CreateNewPlayerDataStructure();
-        }
+        Debug.Log("Creating new player data structure on SaveData()");
+        var playerDataStructure = CreateNewPlayerDataStructure();
 
-        MapPlayer_SO_ToPlayerDataStructure();
+        MapPlayer_SO_ToPlayerDataStructure(playerDataStructure);
         saveSystem.SavePlayer(playerDataStructure);
     }
 
     public void LoadData()
     {
+        var playerDataStructure = saveSystem.LoadPlayer();
         if (playerDataStructure == null)
         {
             Debug.Log("Creating new player data structure on LoadData()");
-            playerDataStructure = CreateNewPlayerDataStructure();
+            SaveData();
+            return;
         }
-
-        playerDataStructure = saveSystem.LoadPlayer();
-        MapPlayerDataStructureToPlayer_SO();
+        MapPlayerDataStructureToPlayer_SO(playerDataStructure);
     }
 
-    private void MapPlayer_SO_ToPlayerDataStructure()
+    private void MapPlayer_SO_ToPlayerDataStructure(PlayerDataStructure playerDataStructure)
     {
         playerDataStructure.BestScore = playerData_SO.BestScore;
         playerDataStructure.LatestScore = playerData_SO.LatestScore;
     }
 
-    private void MapPlayerDataStructureToPlayer_SO()
+    private void MapPlayerDataStructureToPlayer_SO(PlayerDataStructure playerDataStructure)
     {
         playerData_SO.BestScore = playerDataStructure.BestScore;
         playerData_SO.LatestScore = playerDataStructure.LatestScore;
@@ -63,15 +58,15 @@ public class DataManager : MonoBehaviour
         return newPlayerData;
     }
 
-    public void UpdateData()
+    public void UpdateData(PlayerDataStructure newPlayerDataStructure)
     {
-        if (playerDataStructure == null)
-        {
-            Debug.Log("Creating new player data structure on UpdateData()");
-            playerDataStructure = CreateNewPlayerDataStructure();
-        }
-
-        MapPlayer_SO_ToPlayerDataStructure();
+        MapPlayerDataStructureToPlayer_SO(newPlayerDataStructure);
         DataUpdated?.Invoke();
+    }
+
+    [ContextMenu("Open Data Folder")]
+    public void OpenDataFolder()
+    {
+        saveSystem.OpenPlayerDataFolder();
     }
 }

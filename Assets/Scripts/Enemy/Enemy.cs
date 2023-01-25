@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour
     EnemyMovement movement;
     HPSystem hpSystem;
 
+    public EnemyData_SO EnemyData_SO => enemyData_SO; 
+
     private void Awake()
     {
         movement = GetComponent<EnemyMovement>();
@@ -19,7 +21,7 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        hpSystem.SetMaxHP(enemyData_SO.MaxHP);
+        hpSystem.SetMaxHP(EnemyData_SO.MaxHP);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -34,7 +36,7 @@ public class Enemy : MonoBehaviour
 
     private void DamagePlayer(Player player)
     {
-        player.TakeDamage(enemyData_SO.DMG);
+        player.TakeDamage(EnemyData_SO.DMG);
     }
 
     public void StartMoving()

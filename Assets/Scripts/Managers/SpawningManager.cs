@@ -1,9 +1,6 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
-using static Enemy;
 using Random = UnityEngine.Random;
 
 public class SpawningManager : MonoBehaviour
@@ -12,6 +9,7 @@ public class SpawningManager : MonoBehaviour
 
     public static Vector2 despawnPosition = new Vector2(-4, -8);
 
+    GameManager gameManager;
     Enemy.Pool enemyPool;
     Player player;
     PlayerSpawningPoint playerSpawningPoint;
@@ -20,8 +18,9 @@ public class SpawningManager : MonoBehaviour
     Coroutine spawningCoroutineObject;
 
     [Inject]
-    public void Setup(Enemy.Pool enemyPool, Player player)
+    public void Setup(GameManager gameManager, Enemy.Pool enemyPool, Player player)
     {
+        this.gameManager = gameManager;
         this.enemyPool = enemyPool;
         this.player = player;
     }
@@ -34,11 +33,17 @@ public class SpawningManager : MonoBehaviour
 
     private void OnEnable()
     {
+        gameManager.GameRunStarted += SpawnPlayer;
+        gameManager.GameRunStarted += StartSpawningEnemies;
+        gameManager.GameRunEnded += StopSpawningEnemies;
         Enemy.EnemyDied += DespawnEnemy;
     }
 
     private void OnDisable()
     {
+        gameManager.GameRunStarted -= SpawnPlayer;
+        gameManager.GameRunStarted -= StartSpawningEnemies;
+        gameManager.GameRunEnded -= StopSpawningEnemies;
         Enemy.EnemyDied -= DespawnEnemy;
     }
 

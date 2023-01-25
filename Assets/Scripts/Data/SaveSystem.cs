@@ -47,6 +47,5 @@ public class SaveSystem
             File.Delete(path);
     }
 
-
     public void OpenPlayerDataFolder() => Process.Start(Application.persistentDataPath);
 }

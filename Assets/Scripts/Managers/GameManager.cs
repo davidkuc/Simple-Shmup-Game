@@ -1,11 +1,17 @@
+using System;
 using TMPro;
 using UnityEngine;
 using Zenject;
 
 public class GameManager : MonoBehaviour
 {
+    public event Action GameRunStarted;
+    public event Action GameRunEnded;
+
     DataManager dataManager;
     InputManager inputManager;
+
+    PointSystem pointSystem;
 
     bool isGameRunActive;
 
@@ -16,6 +22,11 @@ public class GameManager : MonoBehaviour
         this.inputManager = inputManager;
     }
 
+    private void Awake()
+    {
+        pointSystem = new PointSystem();
+    }
+
     private void Start()
     {
         dataManager.LoadData();
@@ -24,11 +35,29 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         inputManager.AnyButtonPressed += StartGame;
+        Enemy.EnemyDied += OnEnemyDied;
     }
 
     private void OnDisable()
     {
         inputManager.AnyButtonPressed -= StartGame;
+        Enemy.EnemyDied -= OnEnemyDied;
+    }
+
+    private void OnApplicationQuit()
+    {
+        dataManager.UpdateData(pointSystem.GetNewPlayerScore());
+        dataManager.SaveData();
+    }
+
+    private void OnEnemyDied(Enemy enemy)
+    {
+        AddPointsToCurrentScore(enemy.EnemyData_SO.PointsForDeath);
+    }
+
+    public void AddPointsToCurrentScore(int points)
+    {
+        pointSystem.AddPointsToCurrentScore(points);
     }
 
     public void StartGame()
@@ -37,14 +66,14 @@ public class GameManager : MonoBehaviour
             return;
 
         isGameRunActive = true;
-        // spawn player
-        // start spawning enemies
+        GameRunStarted?.Invoke();
     }
 
     public void EndGame()
     {
         isGameRunActive = false;
-        dataManager.UpdateData();
+        dataManager.UpdateData(pointSystem.GetNewPlayerScore());
         dataManager.SaveData();
+        GameRunEnded?.Invoke();
     }
 }
