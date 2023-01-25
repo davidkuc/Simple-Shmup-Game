@@ -47,6 +47,11 @@ public class Player : MonoBehaviour
         inputManager.DownButtonPressed -= MoveDown;
     }
 
+    public void ResetPosition(Vector2 resetPosition)
+    {
+        transform.position = resetPosition;
+    }
+
     private void MoveDown()
     {
         //Debug.Log("Player Move Down!");
@@ -75,4 +80,5 @@ public class Player : MonoBehaviour
     {
         // end game
     }
+
 }

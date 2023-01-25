@@ -63,10 +63,6 @@ public class Enemy : MonoBehaviour
 
     public class Pool : MonoMemoryPool<Enemy>
     {
-        //protected override void Reinitialize(SpawningManager spawningManager, Enemy item)
-        //{
-        //    base.Reinitialize(resetPosition, item);
-        //    item.ResetPosition(resetPosition);
-        //}
+
     }
 }
