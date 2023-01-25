@@ -16,10 +16,6 @@ public class Player : MonoBehaviour
     {
         this.dataManager = dataManager;
         this.inputManager = inputManager;
-
-        inputManager.ShootButtonPressed += Shoot;
-        inputManager.UpButtonPressed += MoveUp;
-        inputManager.DownButtonPressed += MoveDown;
     }
 
     private void Awake()
@@ -35,7 +31,9 @@ public class Player : MonoBehaviour
 
     private void OnEnable()
     {
-  
+        inputManager.ShootButtonPressed += Shoot;
+        inputManager.UpButtonPressed += MoveUp;
+        inputManager.DownButtonPressed += MoveDown;
     }
 
     private void OnDisable()
@@ -47,18 +45,18 @@ public class Player : MonoBehaviour
 
     private void MoveDown()
     {
-        Debug.Log("Player Move Down!");
+        //Debug.Log("Player Move Down!");
         movement.MoveDown();
     }
 
     private void MoveUp()
     {
-        Debug.Log("Player Move Up!");
+        //Debug.Log("Player Move Up!");
         movement.MoveUp();
     }
 
     private void Shoot()
     {
-        Debug.Log("Player Shoot!");
+        //Debug.Log("Player Shoot!");
     }
 }
