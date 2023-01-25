@@ -46,6 +46,7 @@ public class SpawningManager : MonoBehaviour
     public void SpawnPlayer()
     {
         player.transform.position = playerSpawningPoint.transform.position;
+        player.ResetStats();
     }
 
     [ContextMenu("Start Spawning Enemies")]
@@ -74,14 +75,13 @@ public class SpawningManager : MonoBehaviour
     public void SpawnEnemy()
     {
         var enemy = enemyPool.Spawn();
-       // enemy.SetSpawningManager(this);
+        enemy.ResetStats();
         enemy.transform.position = spawningPoints[GetRandomIndex()].transform.position;
         enemy.StartMoving();
     }
 
     public void DespawnEnemy(Enemy enemy)
     {
-        //enemy.UnsetSpawningManager();
         enemy.transform.position = despawnPosition;
         enemyPool.Despawn(enemy);
         enemy.StopMoving();

@@ -63,11 +63,16 @@ public class Player : MonoBehaviour
         shooting.Shoot();
     }
 
-    private void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         hpSystem.TakeDamage(damage);
 
         if (hpSystem.IsDead) Die();
+    }
+
+    public void ResetStats()
+    {
+        hpSystem.ResetHP();
     }
 
     private void Die()

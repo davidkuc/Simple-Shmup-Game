@@ -5,4 +5,5 @@ public class EnemyData_SO : ScriptableObject
 {
     public int MaxHP;
     public int DMG;
+    public int PointsForDeath;
 }
