@@ -28,6 +28,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
             ""id"": ""b7fe5b35-dc28-4100-8741-495f469b0986"",
             ""actions"": [
                 {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""d3400b40-6754-4ca4-9907-31801ed76643"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Up"",
                     ""type"": ""Button"",
                     ""id"": ""4ab98ce6-1b34-4ceb-981d-11a78e7b9f0f"",
@@ -59,7 +68,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""8175a0a2-0dfb-4fe4-88cf-98ff09d97706"",
-                    ""path"": ""<Keyboard>/#(W)"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -70,7 +79,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""c9e1744b-2c0b-4c0d-a74a-0c8d161201c1"",
-                    ""path"": ""<Keyboard>/#(S)"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -88,6 +97,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""KeyPressed"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""00533ab2-6b45-47e9-bf4d-ecdc0067c131"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -96,6 +116,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
 }");
         // Standard
         m_Standard = asset.FindActionMap("Standard", throwIfNotFound: true);
+        m_Standard_Shoot = m_Standard.FindAction("Shoot", throwIfNotFound: true);
         m_Standard_Up = m_Standard.FindAction("Up", throwIfNotFound: true);
         m_Standard_Down = m_Standard.FindAction("Down", throwIfNotFound: true);
         m_Standard_KeyPressed = m_Standard.FindAction("KeyPressed", throwIfNotFound: true);
@@ -158,6 +179,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     // Standard
     private readonly InputActionMap m_Standard;
     private IStandardActions m_StandardActionsCallbackInterface;
+    private readonly InputAction m_Standard_Shoot;
     private readonly InputAction m_Standard_Up;
     private readonly InputAction m_Standard_Down;
     private readonly InputAction m_Standard_KeyPressed;
@@ -165,6 +187,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     {
         private @PlayerControls m_Wrapper;
         public StandardActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Shoot => m_Wrapper.m_Standard_Shoot;
         public InputAction @Up => m_Wrapper.m_Standard_Up;
         public InputAction @Down => m_Wrapper.m_Standard_Down;
         public InputAction @KeyPressed => m_Wrapper.m_Standard_KeyPressed;
@@ -177,6 +200,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_StandardActionsCallbackInterface != null)
             {
+                @Shoot.started -= m_Wrapper.m_StandardActionsCallbackInterface.OnShoot;
+                @Shoot.performed -= m_Wrapper.m_StandardActionsCallbackInterface.OnShoot;
+                @Shoot.canceled -= m_Wrapper.m_StandardActionsCallbackInterface.OnShoot;
                 @Up.started -= m_Wrapper.m_StandardActionsCallbackInterface.OnUp;
                 @Up.performed -= m_Wrapper.m_StandardActionsCallbackInterface.OnUp;
                 @Up.canceled -= m_Wrapper.m_StandardActionsCallbackInterface.OnUp;
@@ -190,6 +216,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
             m_Wrapper.m_StandardActionsCallbackInterface = instance;
             if (instance != null)
             {
+                @Shoot.started += instance.OnShoot;
+                @Shoot.performed += instance.OnShoot;
+                @Shoot.canceled += instance.OnShoot;
                 @Up.started += instance.OnUp;
                 @Up.performed += instance.OnUp;
                 @Up.canceled += instance.OnUp;
@@ -205,6 +234,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     public StandardActions @Standard => new StandardActions(this);
     public interface IStandardActions
     {
+        void OnShoot(InputAction.CallbackContext context);
         void OnUp(InputAction.CallbackContext context);
         void OnDown(InputAction.CallbackContext context);
         void OnKeyPressed(InputAction.CallbackContext context);

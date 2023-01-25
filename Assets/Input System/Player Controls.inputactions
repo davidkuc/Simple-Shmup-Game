@@ -6,6 +6,15 @@
             "id": "b7fe5b35-dc28-4100-8741-495f469b0986",
             "actions": [
                 {
+                    "name": "Shoot",
+                    "type": "Button",
+                    "id": "d3400b40-6754-4ca4-9907-31801ed76643",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Up",
                     "type": "Button",
                     "id": "4ab98ce6-1b34-4ceb-981d-11a78e7b9f0f",
@@ -37,7 +46,7 @@
                 {
                     "name": "",
                     "id": "8175a0a2-0dfb-4fe4-88cf-98ff09d97706",
-                    "path": "<Keyboard>/#(W)",
+                    "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -48,7 +57,7 @@
                 {
                     "name": "",
                     "id": "c9e1744b-2c0b-4c0d-a74a-0c8d161201c1",
-                    "path": "<Keyboard>/#(S)",
+                    "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -64,6 +73,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "KeyPressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "00533ab2-6b45-47e9-bf4d-ecdc0067c131",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shoot",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
