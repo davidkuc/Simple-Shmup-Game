@@ -16,6 +16,11 @@ public class GameManager : MonoBehaviour
         this.inputManager = inputManager;
     }
 
+    private void Start()
+    {
+        dataManager.LoadData();
+    }
+
     private void OnEnable()
     {
         inputManager.AnyButtonPressed += StartGame;
@@ -38,7 +43,8 @@ public class GameManager : MonoBehaviour
 
     public void EndGame()
     {
-        // end game
-        // update data
+        isGameRunActive = false;
+        dataManager.UpdateData();
+        dataManager.SaveData();
     }
 }

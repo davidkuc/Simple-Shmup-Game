@@ -1,22 +1,23 @@
-using System;
 using UnityEngine;
-using UnityEngine.Rendering.VirtualTexturing;
 using Zenject;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] PlayerData_SO playerData_SO;
 
+    GameManager gameManager;
     DataManager dataManager;
     InputManager inputManager;
+    SpawningManager spawningManager;
 
     PlayerShooting shooting;
     PlayerMovement movement;
     HPSystem hpSystem;
 
     [Inject]
-    public void Setup(DataManager dataManager, InputManager inputManager)
+    public void Setup(GameManager gameManager, DataManager dataManager, InputManager inputManager)
     {
+        this.gameManager = gameManager;
         this.dataManager = dataManager;
         this.inputManager = inputManager;
     }
@@ -26,11 +27,8 @@ public class Player : MonoBehaviour
         shooting = GetComponent<PlayerShooting>();
         movement = GetComponent<PlayerMovement>();
         hpSystem = new HPSystem();
-    }
 
-    private void Start()
-    {
-        //playerData_SO = dataManager.PlayerData_SO;
+        transform.position = SpawningManager.despawnPosition;
     }
 
     private void OnEnable()
@@ -45,11 +43,6 @@ public class Player : MonoBehaviour
         inputManager.ShootButtonPressed -= Shoot;
         inputManager.UpButtonPressed -= MoveUp;
         inputManager.DownButtonPressed -= MoveDown;
-    }
-
-    public void ResetPosition(Vector2 resetPosition)
-    {
-        transform.position = resetPosition;
     }
 
     private void MoveDown()
@@ -78,7 +71,6 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
-        // end game
+        gameManager.EndGame();
     }
-
 }

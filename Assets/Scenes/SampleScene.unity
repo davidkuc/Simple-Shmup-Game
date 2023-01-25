@@ -289,9 +289,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 677201641215240383, guid: f3da5f433a8b5c3448906985831ea718, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
+    - target: {fileID: 2125053439029242427, guid: f3da5f433a8b5c3448906985831ea718, type: 3}
+      propertyPath: timeBetweenSpawns
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2592831355777691269, guid: f3da5f433a8b5c3448906985831ea718, type: 3}
       propertyPath: m_RootOrder

@@ -51,12 +51,12 @@ public class Enemy : MonoBehaviour
         transform.position = position;
     }
 
-    public void SetManager(SpawningManager spawningManager)
+    public void SetSpawningManager(SpawningManager spawningManager)
     {
         this.spawningManager = spawningManager;
     }
 
-    public void UnSetManager()
+    public void UnsetSpawningManager()
     {
         this.spawningManager = null;
     }

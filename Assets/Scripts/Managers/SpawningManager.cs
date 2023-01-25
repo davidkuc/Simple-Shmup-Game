@@ -8,12 +8,15 @@ public class SpawningManager : MonoBehaviour
 {
     [SerializeField] float timeBetweenSpawns;
 
+    public static Vector2 despawnPosition = new Vector2(-4, -8);
+
     Enemy.Pool enemyPool;
     Player player;
     PlayerSpawningPoint playerSpawningPoint;
     SpawningPoint[] spawningPoints;
 
-    Vector2 despawnPosition = new Vector2(-4, -8);
+    Coroutine spawningCoroutineObject;
+
 
     [Inject]
     public void Setup(Enemy.Pool enemyPool, Player player)
@@ -31,18 +34,19 @@ public class SpawningManager : MonoBehaviour
     [ContextMenu("Spawn Player")]
     public void SpawnPlayer()
     {
-        //player.ResetPosition(playerSpawningPoint.transform.position);
         player.transform.position = playerSpawningPoint.transform.position;
     }
 
+    [ContextMenu("Start Spawning Enemies")]
     public void StartSpawningEnemies()
     {
-        StartCoroutine(SpawningCoroutine());
+        spawningCoroutineObject = StartCoroutine(SpawningCoroutine());
     }
 
+    [ContextMenu("Stop Spawning Enemies")]
     public void StopSpawningEnemies()
     {
-        StopCoroutine(SpawningCoroutine());
+        StopCoroutine(spawningCoroutineObject);
     }
 
     private IEnumerator SpawningCoroutine()
@@ -59,14 +63,14 @@ public class SpawningManager : MonoBehaviour
     public void SpawnEnemy()
     {
         var enemy = enemyPool.Spawn();
-        enemy.SetManager(this);
+        enemy.SetSpawningManager(this);
         enemy.transform.position = spawningPoints[GetRandomIndex()].transform.position;
         enemy.StartMoving();
     }
 
     public void DespawnEnemy(Enemy enemy)
     {
-        enemy.UnSetManager();
+        enemy.UnsetSpawningManager();
         enemy.transform.position = despawnPosition;
         enemyPool.Despawn(enemy);
         enemy.StopMoving();

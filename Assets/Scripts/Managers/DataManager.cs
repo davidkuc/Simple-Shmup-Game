@@ -62,4 +62,16 @@ public class DataManager : MonoBehaviour
 
         return newPlayerData;
     }
+
+    public void UpdateData()
+    {
+        if (playerDataStructure == null)
+        {
+            Debug.Log("Creating new player data structure on UpdateData()");
+            playerDataStructure = CreateNewPlayerDataStructure();
+        }
+
+        MapPlayer_SO_ToPlayerDataStructure();
+        DataUpdated?.Invoke();
+    }
 }
