@@ -17,7 +17,6 @@ public class SpawningManager : MonoBehaviour
 
     Coroutine spawningCoroutineObject;
 
-
     [Inject]
     public void Setup(Enemy.Pool enemyPool, Player player)
     {
