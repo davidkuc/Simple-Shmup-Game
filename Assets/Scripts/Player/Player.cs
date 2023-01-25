@@ -47,18 +47,24 @@ public class Player : MonoBehaviour
 
     private void MoveDown()
     {
+        if (!gameManager.IsGameRunActive)
+            return;
         //Debug.Log("Player Move Down!");
         movement.MoveDown();
     }
 
     private void MoveUp()
     {
+        if (!gameManager.IsGameRunActive)
+            return;
         //Debug.Log("Player Move Up!");
         movement.MoveUp();
     }
 
     private void Shoot()
     {
+        if (!gameManager.IsGameRunActive)
+            return;
         //Debug.Log("Player Shoot!");
         shooting.Shoot();
     }

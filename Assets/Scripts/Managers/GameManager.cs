@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
 
     bool isGameRunActive;
 
+    public bool IsGameRunActive => isGameRunActive; 
+
     [Inject]
     public void Setup(DataManager dataManager, InputManager inputManager)
     {
@@ -62,7 +64,7 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        if (isGameRunActive)
+        if (IsGameRunActive)
             return;
 
         isGameRunActive = true;
