@@ -5,6 +5,7 @@ public class ProjectInstaller : MonoInstaller
 {
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private GameObject bulletPrefab;
 
     public override void InstallBindings()
     {
@@ -18,5 +19,8 @@ public class ProjectInstaller : MonoInstaller
 
         Container.BindMemoryPool<Enemy, Enemy.Pool>().WithInitialSize(10)
        .FromComponentInNewPrefab(enemyPrefab).UnderTransformGroup("Enemy Pool");
+
+        Container.BindMemoryPool<Bullet, Bullet.Pool>().WithInitialSize(10)
+        .FromComponentInNewPrefab(bulletPrefab).UnderTransformGroup("Bullet Pool");
     }
 }

@@ -60,6 +60,7 @@ public class Player : MonoBehaviour
     private void Shoot()
     {
         //Debug.Log("Player Shoot!");
+        shooting.Shoot();
     }
 
     private void TakeDamage(int damage)

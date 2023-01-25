@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 using static Enemy;
+using Random = UnityEngine.Random;
 
 public class SpawningManager : MonoBehaviour
 {
@@ -28,6 +30,16 @@ public class SpawningManager : MonoBehaviour
     {
         spawningPoints = GetComponentsInChildren<SpawningPoint>();
         playerSpawningPoint = GetComponentInChildren<PlayerSpawningPoint>();
+    }
+
+    private void OnEnable()
+    {
+        Enemy.EnemyDied += DespawnEnemy;
+    }
+
+    private void OnDisable()
+    {
+        Enemy.EnemyDied -= DespawnEnemy;
     }
 
     [ContextMenu("Spawn Player")]
@@ -62,14 +74,14 @@ public class SpawningManager : MonoBehaviour
     public void SpawnEnemy()
     {
         var enemy = enemyPool.Spawn();
-        enemy.SetSpawningManager(this);
+       // enemy.SetSpawningManager(this);
         enemy.transform.position = spawningPoints[GetRandomIndex()].transform.position;
         enemy.StartMoving();
     }
 
     public void DespawnEnemy(Enemy enemy)
     {
-        enemy.UnsetSpawningManager();
+        //enemy.UnsetSpawningManager();
         enemy.transform.position = despawnPosition;
         enemyPool.Despawn(enemy);
         enemy.StopMoving();

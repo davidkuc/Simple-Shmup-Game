@@ -1,13 +1,12 @@
 using System;
 using UnityEngine;
 using Zenject;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] EnemyData_SO enemyData_SO;
+    public static event Action<Enemy> EnemyDied;
 
-    SpawningManager spawningManager;
+    [SerializeField] EnemyData_SO enemyData_SO;
 
     EnemyMovement movement;
     HPSystem hpSystem;
@@ -43,22 +42,12 @@ public class Enemy : MonoBehaviour
     [ContextMenu("Die")]
     private void Die()
     {
-        spawningManager.DespawnEnemy(this);
+        EnemyDied?.Invoke(this);
     }
 
     public void ResetPosition(Vector2 position)
     {
         transform.position = position;
-    }
-
-    public void SetSpawningManager(SpawningManager spawningManager)
-    {
-        this.spawningManager = spawningManager;
-    }
-
-    public void UnsetSpawningManager()
-    {
-        this.spawningManager = null;
     }
 
     public class Pool : MonoMemoryPool<Enemy>

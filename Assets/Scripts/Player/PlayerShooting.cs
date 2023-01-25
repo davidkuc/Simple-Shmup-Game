@@ -1,16 +1,35 @@
 using UnityEngine;
+using Zenject;
 
 public class PlayerShooting : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
+    Bullet.Pool bulletPool;
 
+    [Inject]
+    public void Setup(Bullet.Pool bulletPool, Player player)
+    {
+        this.bulletPool = bulletPool;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
+        Bullet.BulletHit += DespawnBullet;   
+    }
 
+    private void OnDisable()
+    {
+        Bullet.BulletHit -= DespawnBullet;
+    }
+
+    private void DespawnBullet(Bullet obj)
+    {
+        bulletPool.Despawn(obj);
+    }
+
+    public void Shoot()
+    {
+        var bullet = bulletPool.Spawn();
+        bullet.transform.position = transform.position;
+        bullet.Shoot();
     }
 }
