@@ -1,15 +1,18 @@
+using System;
 using UnityEngine;
+using UnityEngine.Rendering.VirtualTexturing;
 using Zenject;
 
 public class Player : MonoBehaviour
 {
-    PlayerData_SO playerData_SO;
+    [SerializeField] PlayerData_SO playerData_SO;
 
     DataManager dataManager;
     InputManager inputManager;
 
     PlayerShooting shooting;
     PlayerMovement movement;
+    HPSystem hpSystem;
 
     [Inject]
     public void Setup(DataManager dataManager, InputManager inputManager)
@@ -22,6 +25,7 @@ public class Player : MonoBehaviour
     {
         shooting = GetComponent<PlayerShooting>();
         movement = GetComponent<PlayerMovement>();
+        hpSystem = new HPSystem();
     }
 
     private void Start()
@@ -58,5 +62,17 @@ public class Player : MonoBehaviour
     private void Shoot()
     {
         //Debug.Log("Player Shoot!");
+    }
+
+    private void TakeDamage(int damage)
+    {
+        hpSystem.TakeDamage(damage);
+
+        if (hpSystem.IsDead) Die();
+    }
+
+    private void Die()
+    {
+        // end game
     }
 }

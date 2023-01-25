@@ -5,9 +5,10 @@ public class DataManager : MonoBehaviour
 {
     public event Action DataUpdated;
 
+    [SerializeField] PlayerData_SO playerData_SO;
+
     SaveSystem saveSystem;
 
-    PlayerData_SO playerData_SO;
     PlayerDataStructure playerDataStructure;
 
     public PlayerData_SO PlayerData_SO => playerData_SO;

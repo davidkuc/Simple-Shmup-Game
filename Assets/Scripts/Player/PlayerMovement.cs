@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] int maxRowIndex = 4;
     int currentIndex = 2;
     [SerializeField] float stepDistance = 0.1f;
 
@@ -29,6 +28,6 @@ public class PlayerMovement : MonoBehaviour
 
     private bool ReachedLimitRow(bool up)
     {
-        return up ? currentIndex + 1 > maxRowIndex : currentIndex - 1 < 0;
+        return up ? currentIndex + 1 > GameConstants.maxRowIndex : currentIndex - 1 < 0;
     }
 }

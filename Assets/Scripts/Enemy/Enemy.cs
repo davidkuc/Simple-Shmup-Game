@@ -3,6 +3,8 @@ using Zenject;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] EnemyData_SO enemyData_SO;
+
     DataManager dataManager;
 
     EnemyMovement movement;
@@ -22,31 +24,42 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        //hpSystem.SetMaxHP(dataManager.EnemyData_SO.MaxHP);
+        hpSystem.SetMaxHP(enemyData_SO.MaxHP);
     }
 
     public void StartMoving()
     {
-
+        movement.StartMoving();
     }
 
     public void StopMoving()
     {
-
+        movement.StopMoving();
     }
 
-    public void TakeDamage(int dmg)
+    public void TakeDamage(int damage)
     {
+        hpSystem.TakeDamage(damage);
 
+        if (hpSystem.IsDead) Die();
     }
 
     private void Die()
     {
-
+        // Pooling stuff, should go back where he came from
     }
 
     public void ResetPosition(Vector2 position)
     {
         transform.position = position;
+    }
+
+    public class Pool : MonoMemoryPool<Enemy>
+    {
+        //protected override void Reinitialize(Vector2 resetPosition, Enemy item)
+        //{
+        //    base.Reinitialize(resetPosition, item);
+        //    item.ResetPosition(resetPosition);
+        //}
     }
 }
