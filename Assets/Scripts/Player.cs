@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     InputManager inputManager;
 
     //ShootComponent shooter;
-   // MovementComponent movement;
+    //MovementComponent movement;
 
     [Inject]
     public void Setup(DataManager dataManager, InputManager inputManager)
@@ -25,6 +25,30 @@ public class Player : MonoBehaviour
 
     private void OnEnable()
     {
-        //inputManager.
+        inputManager.ShootButtonPressed += Shoot;
+        inputManager.UpButtonPressed += MoveUp;
+        inputManager.DownButtonPressed += MoveDown;
+    }
+
+    private void OnDisable()
+    {
+        inputManager.ShootButtonPressed -= Shoot;
+        inputManager.UpButtonPressed -= MoveUp;
+        inputManager.DownButtonPressed -= MoveDown;
+    }
+
+    private void MoveDown()
+    {
+        Debug.Log("Player Move Down!");
+    }
+
+    private void MoveUp()
+    {
+        Debug.Log("Player Move Up!");
+    }
+
+    private void Shoot()
+    {
+        Debug.Log("Player Shoot!");
     }
 }

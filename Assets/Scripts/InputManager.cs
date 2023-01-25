@@ -36,7 +36,7 @@ public class InputManager : MonoBehaviour
     }
     private void OnShootButtonPressed(InputAction.CallbackContext obj)
     {
-        Debug.Log("Shoot!");
+        //Debug.Log("Shoot!");
         ShootButtonPressed?.Invoke();
     }
 
