@@ -26,4 +26,10 @@ public class PointSystem
     {
         return new PlayerDataStructure() { CurrentScore = currentScore, LatestScore = latestScore, BestScore = bestScore };
     }
+
+    public void LoadScore(PlayerDataStructure playerDataStructure)
+    {
+        latestScore = playerDataStructure.LatestScore;
+        bestScore = playerDataStructure.BestScore;
+    }
 }

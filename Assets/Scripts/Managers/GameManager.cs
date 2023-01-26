@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
 
     bool isGameRunActive;
 
-    public bool IsGameRunActive => isGameRunActive; 
+    public bool IsGameRunActive => isGameRunActive;
 
     [Inject]
     public void Setup(DataManager dataManager, InputManager inputManager)
@@ -30,7 +30,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        dataManager.LoadData();
+        var loadedData = dataManager.LoadData();
+        pointSystem.LoadScore(loadedData);
     }
 
     private void OnEnable()

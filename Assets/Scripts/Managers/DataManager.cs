@@ -26,19 +26,21 @@ public class DataManager : MonoBehaviour
         saveSystem.SavePlayer(playerDataStructure);
     }
 
-    public void LoadData()
+    public PlayerDataStructure LoadData()
     {
         var playerDataStructure = saveSystem.LoadPlayer();
         if (playerDataStructure == null)
         {
             Debug.Log("Didnt find save file");
             SaveData();
-            return;
+            return CreateNewPlayerDataStructure();
         }
         MapPlayerDataStructureToPlayer_SO(playerDataStructure);
 
         DataUpdated?.Invoke();
         Debug.Log($"Loaded Data");
+
+        return playerDataStructure;
     }
 
     private void MapPlayer_SO_ToPlayerDataStructure(PlayerDataStructure playerDataStructure)
