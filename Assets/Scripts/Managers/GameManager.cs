@@ -2,10 +2,12 @@ using System;
 using UnityEngine;
 using Zenject;
 
+[DefaultExecutionOrder(-1)]
 public class GameManager : MonoBehaviour
 {
     public event Action GameRunStarted;
     public event Action GameRunEnded;
+    public event Action<int> CurrentScoreUpdated;
 
     DataManager dataManager;
     InputManager inputManager;
@@ -48,7 +50,7 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        dataManager.UpdateData(pointSystem.GetNewPlayerScore());
+        dataManager.UpdateData(pointSystem.GetScoreData());
         dataManager.SaveData();
     }
 
@@ -60,25 +62,31 @@ public class GameManager : MonoBehaviour
     public void AddPointsToCurrentScore(int points)
     {
         pointSystem.AddPointsToCurrentScore(points);
-        pointSystem.SetLatestScoreToCurrentScore();
-        dataManager.UpdateData(pointSystem.GetNewPlayerScore());
+        dataManager.UpdateData(pointSystem.GetScoreData());
+        CurrentScoreUpdated?.Invoke(pointSystem.GetCurrentScore());
     }
 
+    [ContextMenu("Start Game")]
     public void StartGame()
     {
         if (IsGameRunActive)
             return;
 
         isGameRunActive = true;
+
         GameRunStarted?.Invoke();
     }
 
     public void EndGame()
     {
         isGameRunActive = false;
+
         pointSystem.ResetCurrentScore();
-        dataManager.UpdateData(pointSystem.GetNewPlayerScore());
+        CurrentScoreUpdated?.Invoke(pointSystem.GetCurrentScore());
+
+        dataManager.UpdateData(pointSystem.GetScoreData());
         dataManager.SaveData();
+
         GameRunEnded?.Invoke();
     }
 }

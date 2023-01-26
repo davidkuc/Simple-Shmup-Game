@@ -22,12 +22,7 @@ public class UI_LatestScoreText : MonoBehaviour
 
     private void OnEnable()
     {
-        dataManager.DataUpdated += UpdateText;
-    }
-
-    private void OnDisable()
-    {
-        dataManager.DataUpdated -= UpdateText;
+        UpdateText();
     }
 
     public void UpdateText()

@@ -4,14 +4,14 @@ using Zenject;
 
 public class UI_CurrentScoreText : MonoBehaviour
 {
-    DataManager dataManager;
+    GameManager gameManager;
 
     TMP_Text text;
 
     [Inject]
-    public void Setup(DataManager dataManager)
+    public void Setup(GameManager gameManager)
     {
-        this.dataManager = dataManager;
+        this.gameManager = gameManager;
     }
 
     private void Awake()
@@ -26,16 +26,16 @@ public class UI_CurrentScoreText : MonoBehaviour
 
     private void OnEnable()
     {
-        dataManager.DataUpdated += UpdateText;
+        gameManager.CurrentScoreUpdated += UpdateText;
     }
 
     private void OnDisable()
     {
-        dataManager.DataUpdated -= UpdateText;
+        gameManager.CurrentScoreUpdated -= UpdateText;
     }
 
-    public void UpdateText()
+    public void UpdateText(int currentScore)
     {
-        text.text = dataManager.PlayerData_SO.CurrentScore.ToString();
+        text.text = currentScore.ToString();
     }
 }

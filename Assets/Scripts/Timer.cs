@@ -5,25 +5,23 @@ public class Timer
 {
     public event Action TimeFinished;
 
-    public float maxTime = 10;
+    public float maxTime;
     public float timeRemaining;
     public bool timerIsRunning = false;
 
     public Timer(float maxTime)
     {
-        timerIsRunning = true;
         SetMaxTime(maxTime);
-        timeRemaining = maxTime;
+        ResetTimer();
     }
 
     public void SetMaxTime(float maxTime)
     {
-        this.maxTime -= maxTime;
+        this.maxTime += maxTime;
     }
 
     public void Start()
     {
-        timeRemaining = maxTime;
         timerIsRunning = true;
     }
 
@@ -31,6 +29,11 @@ public class Timer
     {
         timeRemaining = 0;
         timerIsRunning = false;
+    }
+
+    public void ResetTimer()
+    {
+        timeRemaining = maxTime;
     }
 
     public void Tick(float time)
@@ -43,7 +46,6 @@ public class Timer
             }
             else
             {
-                Debug.Log("Time has run out!");
                 timeRemaining = 0;
                 timerIsRunning = false;
 

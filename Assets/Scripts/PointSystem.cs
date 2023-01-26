@@ -4,6 +4,11 @@ public class PointSystem
     int latestScore = 0;
     int currentScore = 0;
 
+    public int GetCurrentScore()
+    {
+        return currentScore;
+    }
+
     public void ResetCurrentScore()
     {
         currentScore = 0;
@@ -12,17 +17,13 @@ public class PointSystem
     public void AddPointsToCurrentScore(int points)
     {
         currentScore += points;
-    }
-
-    public void SetLatestScoreToCurrentScore()
-    {
         latestScore = currentScore;
 
         if (latestScore > bestScore)
             bestScore = latestScore;
     }
 
-    public PlayerDataStructure GetNewPlayerScore()
+    public PlayerDataStructure GetScoreData()
     {
         return new PlayerDataStructure() { CurrentScore = currentScore, LatestScore = latestScore, BestScore = bestScore };
     }

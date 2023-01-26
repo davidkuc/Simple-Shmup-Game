@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using Zenject;
 
-public class UI_TimeText : MonoBehaviour
+public class UI_TimeText : UI_Container
 {
     GameManager gameManager;
 
@@ -15,10 +15,11 @@ public class UI_TimeText : MonoBehaviour
         this.gameManager = gameManager;
     }
 
-    private void Awake()
+    protected override void Awake()
     {
-        text = transform.Find("text").GetComponent<TMP_Text>();
-        timer = new Timer(1800);
+        base.Awake();
+        text = Canvas.transform.Find("text").GetComponent<TMP_Text>();
+        timer = new Timer(15);
     }
 
     private void Update()
@@ -32,30 +33,38 @@ public class UI_TimeText : MonoBehaviour
 
     private void OnEnable()
     {
-        gameManager.GameRunStarted += StartTimer;
+        gameManager.GameRunStarted += OnGameRunStarted;
         gameManager.GameRunEnded += EndTimer;
         timer.TimeFinished += OnTimeFinished;
     }
 
     private void OnDisable()
     {
-        gameManager.GameRunStarted -= StartTimer;
+        gameManager.GameRunStarted -= OnGameRunStarted;
         gameManager.GameRunEnded -= EndTimer;
         timer.TimeFinished -= OnTimeFinished;
     }
 
+    private void OnGameRunStarted()
+    {
+        ToggleCanvas(true);
+        StartTimer();
+    }
+
     private void OnTimeFinished()
     {
+        ToggleCanvas(false);
         gameManager.EndGame();
     }
 
-    private void EndTimer()
+    public void EndTimer()
     {
         timer.Stop();
     }
 
     public void StartTimer()
     {
+        timer.ResetTimer();
         timer.Start();
     }
 }

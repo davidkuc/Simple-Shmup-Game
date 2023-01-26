@@ -21,7 +21,6 @@ public class DataManager : MonoBehaviour
         Debug.Log("Saving Data");
         var playerDataStructure = CreateNewPlayerDataStructure();
 
-        Debug.Log($"SO score: {PlayerData_SO.BestScore}");
         MapPlayer_SO_ToPlayerDataStructure(playerDataStructure);
         saveSystem.SavePlayer(playerDataStructure);
     }
@@ -45,14 +44,12 @@ public class DataManager : MonoBehaviour
 
     private void MapPlayer_SO_ToPlayerDataStructure(PlayerDataStructure playerDataStructure)
     {
-        playerDataStructure.CurrentScore = playerData_SO.CurrentScore;
         playerDataStructure.BestScore = playerData_SO.BestScore;
         playerDataStructure.LatestScore = playerData_SO.LatestScore;
     }
 
     private void MapPlayerDataStructureToPlayer_SO(PlayerDataStructure playerDataStructure)
     {
-        playerData_SO.CurrentScore = playerDataStructure.CurrentScore;
         playerData_SO.BestScore = playerDataStructure.BestScore;
         playerData_SO.LatestScore = playerDataStructure.LatestScore;
     }
@@ -60,7 +57,6 @@ public class DataManager : MonoBehaviour
     private PlayerDataStructure CreateNewPlayerDataStructure()
     {
         var newPlayerData = new PlayerDataStructure();
-        newPlayerData.CurrentScore = playerData_SO.CurrentScore;
         newPlayerData.BestScore = playerData_SO.BestScore;
         newPlayerData.LatestScore = playerData_SO.LatestScore;
 
