@@ -39,8 +39,10 @@ public class SpawningManager : MonoBehaviour
         gameManager.GameRunStarted += SpawnPlayer;
         gameManager.GameRunStarted += StartSpawningEnemies;
         gameManager.GameRunEnded += StopSpawningEnemies;
-        gameManager.GameRunEnded += ResetEnemies;
+        gameManager.GameRunEnded += ReturnEnemiesToPool;
+
         Enemy.EnemyDied += DespawnEnemy;
+        Enemy.EnemyReturnedToPool += DespawnEnemy;
     }
 
     private void OnDisable()
@@ -48,15 +50,17 @@ public class SpawningManager : MonoBehaviour
         gameManager.GameRunStarted -= SpawnPlayer;
         gameManager.GameRunStarted -= StartSpawningEnemies;
         gameManager.GameRunEnded -= StopSpawningEnemies;
-        gameManager.GameRunEnded -= ResetEnemies;
+        gameManager.GameRunEnded -= ReturnEnemiesToPool;
+
         Enemy.EnemyDied -= DespawnEnemy;
+        Enemy.EnemyReturnedToPool -= DespawnEnemy;
     }
 
-    private void ResetEnemies()
+    private void ReturnEnemiesToPool()
     {
         for (int i = enemies.Count-1; i > -1; i--)
         {
-            enemies[i].Die();
+            enemies[i].ReturnToPool();
         }     
     }
 

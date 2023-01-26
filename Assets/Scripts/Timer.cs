@@ -17,7 +17,7 @@ public class Timer
 
     public void SetMaxTime(float maxTime)
     {
-        this.maxTime += maxTime;
+        this.maxTime = maxTime;
     }
 
     public void Start()

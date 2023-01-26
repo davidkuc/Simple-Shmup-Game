@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public event Action GameRunEnded;
     public event Action<int> CurrentScoreUpdated;
 
+    [SerializeField] float gameRunTime;
+
     DataManager dataManager;
     InputManager inputManager;
 
@@ -17,6 +19,8 @@ public class GameManager : MonoBehaviour
     bool isGameRunActive;
 
     public bool IsGameRunActive => isGameRunActive;
+
+    public float GameRunTime => gameRunTime; 
 
     [Inject]
     public void Setup(DataManager dataManager, InputManager inputManager)
@@ -56,9 +60,6 @@ public class GameManager : MonoBehaviour
 
     private void OnEnemyDied(Enemy enemy)
     {
-        if (enemy.IsDespawning)
-            return;
-
         AddPointsToCurrentScore(enemy.EnemyData_SO.PointsForDeath);
     }
 

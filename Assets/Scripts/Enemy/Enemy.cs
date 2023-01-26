@@ -5,6 +5,7 @@ using Zenject;
 public class Enemy : MonoBehaviour
 {
     public static event Action<Enemy> EnemyDied;
+    public static event Action<Enemy> EnemyReturnedToPool;
 
     [SerializeField] EnemyData_SO enemyData_SO;
 
@@ -78,6 +79,12 @@ public class Enemy : MonoBehaviour
 
         isDespawning = true;
         EnemyDied?.Invoke(this);
+    }
+
+    public void ReturnToPool()
+    {
+        isDespawning = true;
+        EnemyReturnedToPool?.Invoke(this);
     }
 
     public class Pool : MonoMemoryPool<Enemy>

@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -19,7 +20,7 @@ public class UI_TimeText : UI_Container
     {
         base.Awake();
         text = Canvas.transform.Find("text").GetComponent<TMP_Text>();
-        timer = new Timer(15);
+        timer = new Timer(30);
     }
 
     private void Update()
@@ -48,7 +49,7 @@ public class UI_TimeText : UI_Container
     private void OnGameRunStarted()
     {
         ToggleCanvas(true);
-        StartTimer();
+        StartTimer(gameManager.GameRunTime);
     }
 
     private void OnTimeFinished()
@@ -62,9 +63,15 @@ public class UI_TimeText : UI_Container
         timer.Stop();
     }
 
-    public void StartTimer()
+    public void StartTimer(float gameRunTime)
     {
+        timer.SetMaxTime(gameRunTime);
         timer.ResetTimer();
         timer.Start();
+    }
+
+    internal void SetGameRunTimer(float gameRunTime)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -17,6 +17,7 @@ public class ProjectInstaller : MonoInstaller
 
         Container.Bind<UI_MainScreen>().FromComponentInHierarchy().AsSingle().NonLazy();
         Container.Bind<UI_GameScreen>().FromComponentInHierarchy().AsSingle().NonLazy();
+        Container.Bind<UI_TimeText>().FromComponentInHierarchy().AsSingle().NonLazy();
 
         Container.BindMemoryPool<Enemy, Enemy.Pool>().WithInitialSize(10)
        .FromComponentInNewPrefab(enemyPrefab).UnderTransformGroup("Enemy Pool");
