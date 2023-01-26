@@ -1,4 +1,4 @@
-# Test BLS - David Kuc
+# Simple Shmup Game
  
 Assets:
 - Zenject
