@@ -88,7 +88,6 @@ public class Player : MonoBehaviour
         if (hpSystem.IsDead) Die();
 
         PlayerDamaged?.Invoke();
-        Debug.Log("Take dmg");
     }
 
     public void ResetStats()

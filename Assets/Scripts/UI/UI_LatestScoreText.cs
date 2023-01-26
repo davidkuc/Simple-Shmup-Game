@@ -23,7 +23,6 @@ public class UI_LatestScoreText : MonoBehaviour
     private void OnEnable()
     {
         dataManager.DataUpdated += UpdateText;
-        UpdateText();
     }
 
     private void OnDisable()

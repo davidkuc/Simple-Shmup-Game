@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
@@ -11,6 +12,7 @@ public class SpawningManager : MonoBehaviour
 
     GameManager gameManager;
     Enemy.Pool enemyPool;
+    List<Enemy> enemies;
     Player player;
     PlayerSpawningPoint playerSpawningPoint;
     SpawningPoint[] spawningPoints;
@@ -29,6 +31,7 @@ public class SpawningManager : MonoBehaviour
     {
         spawningPoints = GetComponentsInChildren<SpawningPoint>();
         playerSpawningPoint = GetComponentInChildren<PlayerSpawningPoint>();
+        enemies = new List<Enemy>();
     }
 
     private void OnEnable()
@@ -36,6 +39,7 @@ public class SpawningManager : MonoBehaviour
         gameManager.GameRunStarted += SpawnPlayer;
         gameManager.GameRunStarted += StartSpawningEnemies;
         gameManager.GameRunEnded += StopSpawningEnemies;
+        gameManager.GameRunEnded += ResetEnemies;
         Enemy.EnemyDied += DespawnEnemy;
     }
 
@@ -44,7 +48,16 @@ public class SpawningManager : MonoBehaviour
         gameManager.GameRunStarted -= SpawnPlayer;
         gameManager.GameRunStarted -= StartSpawningEnemies;
         gameManager.GameRunEnded -= StopSpawningEnemies;
+        gameManager.GameRunEnded -= ResetEnemies;
         Enemy.EnemyDied -= DespawnEnemy;
+    }
+
+    private void ResetEnemies()
+    {
+        for (int i = enemies.Count-1; i > -1; i--)
+        {
+            enemies[i].Die();
+        }     
     }
 
     [ContextMenu("Spawn Player")]
@@ -80,6 +93,7 @@ public class SpawningManager : MonoBehaviour
     public void SpawnEnemy()
     {
         var enemy = enemyPool.Spawn();
+        enemies.Add(enemy);
         enemy.ResetStats();
         enemy.transform.position = spawningPoints[GetRandomIndex()].transform.position;
         enemy.StartMoving();
@@ -89,6 +103,7 @@ public class SpawningManager : MonoBehaviour
     {
         enemy.transform.position = despawnPosition;
         enemyPool.Despawn(enemy);
+        enemies.Remove(enemy);
         enemy.StopMoving();
     }
 

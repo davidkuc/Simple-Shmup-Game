@@ -19,10 +19,14 @@ public class UI_CurrentScoreText : MonoBehaviour
         text = transform.Find("text").GetComponent<TMP_Text>();
     }
 
+    private void Start()
+    {
+        text.text = "0";
+    }
+
     private void OnEnable()
     {
         dataManager.DataUpdated += UpdateText;
-        UpdateText();
     }
 
     private void OnDisable()

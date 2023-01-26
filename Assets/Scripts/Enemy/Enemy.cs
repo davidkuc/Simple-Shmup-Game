@@ -10,8 +10,12 @@ public class Enemy : MonoBehaviour
 
     EnemyMovement movement;
     HPSystem hpSystem;
+    bool isDespawning;
 
-    public EnemyData_SO EnemyData_SO => enemyData_SO; 
+
+    public EnemyData_SO EnemyData_SO => enemyData_SO;
+
+    public bool IsDespawning => isDespawning; 
 
     private void Awake()
     {
@@ -28,9 +32,14 @@ public class Enemy : MonoBehaviour
     {
         var player = collision.transform.GetComponent<Player>();
 
-        if (player)
+        if (collision.transform.CompareTag(GameConstants.PlayerTag))
         {
             DamagePlayer(player);
+            Die();
+        }
+        else if (collision.transform.CompareTag(GameConstants.EnemyCatcherTag))
+        {
+            Die();
         }
     }
 
@@ -59,11 +68,16 @@ public class Enemy : MonoBehaviour
     public void ResetStats()
     {
         hpSystem.ResetHP();
+        isDespawning = false;
     }
 
     [ContextMenu("Die")]
-    private void Die()
+    public void Die()
     {
+        if (isDespawning)
+            return;
+
+        isDespawning = true;
         EnemyDied?.Invoke(this);
     }
 
