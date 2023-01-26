@@ -18,9 +18,10 @@ public class DataManager : MonoBehaviour
 
     public void SaveData()
     {
-        Debug.Log("Creating new player data structure on SaveData()");
+        Debug.Log("Saving Data");
         var playerDataStructure = CreateNewPlayerDataStructure();
 
+        Debug.Log($"SO score: {PlayerData_SO.BestScore}");
         MapPlayer_SO_ToPlayerDataStructure(playerDataStructure);
         saveSystem.SavePlayer(playerDataStructure);
     }
@@ -37,6 +38,7 @@ public class DataManager : MonoBehaviour
         MapPlayerDataStructureToPlayer_SO(playerDataStructure);
 
         DataUpdated?.Invoke();
+        Debug.Log($"Loaded Data");
     }
 
     private void MapPlayer_SO_ToPlayerDataStructure(PlayerDataStructure playerDataStructure)

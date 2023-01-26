@@ -12,7 +12,6 @@ public class Enemy : MonoBehaviour
     HPSystem hpSystem;
     bool isDespawning;
 
-
     public EnemyData_SO EnemyData_SO => enemyData_SO;
 
     public bool IsDespawning => isDespawning; 
