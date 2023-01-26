@@ -56,6 +56,9 @@ public class GameManager : MonoBehaviour
 
     private void OnEnemyDied(Enemy enemy)
     {
+        if (enemy.IsDespawning)
+            return;
+
         AddPointsToCurrentScore(enemy.EnemyData_SO.PointsForDeath);
     }
 

@@ -46,6 +46,7 @@ public class DataManager : MonoBehaviour
     {
         playerDataStructure.BestScore = playerData_SO.BestScore;
         playerDataStructure.LatestScore = playerData_SO.LatestScore;
+        Debug.Log($"Mapping SO latest scxore {playerData_SO.LatestScore} to PDS");
     }
 
     private void MapPlayerDataStructureToPlayer_SO(PlayerDataStructure playerDataStructure)
@@ -67,6 +68,7 @@ public class DataManager : MonoBehaviour
     {
         MapPlayerDataStructureToPlayer_SO(newPlayerDataStructure);
         DataUpdated?.Invoke();
+        Debug.Log($"Updating data latest socre --> {newPlayerDataStructure.LatestScore}");
     }
 
     [ContextMenu("Open Data Folder")]
