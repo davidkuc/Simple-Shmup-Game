@@ -83,6 +83,9 @@ public class Enemy : MonoBehaviour
 
     public void ReturnToPool()
     {
+        if (isDespawning)
+            return;
+
         isDespawning = true;
         EnemyReturnedToPool?.Invoke(this);
     }

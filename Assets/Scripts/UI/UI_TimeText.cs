@@ -35,14 +35,14 @@ public class UI_TimeText : UI_Container
     private void OnEnable()
     {
         gameManager.GameRunStarted += OnGameRunStarted;
-        gameManager.GameRunEnded += EndTimer;
+        gameManager.GameRunEnded += OnGameRunEnded;
         timer.TimeFinished += OnTimeFinished;
     }
 
     private void OnDisable()
     {
         gameManager.GameRunStarted -= OnGameRunStarted;
-        gameManager.GameRunEnded -= EndTimer;
+        gameManager.GameRunEnded -= OnGameRunEnded;
         timer.TimeFinished -= OnTimeFinished;
     }
 
@@ -52,9 +52,14 @@ public class UI_TimeText : UI_Container
         StartTimer(gameManager.GameRunTime);
     }
 
+    private void OnGameRunEnded()
+    {
+        EndTimer();
+        ToggleCanvas(false);
+    }
+
     private void OnTimeFinished()
     {
-        ToggleCanvas(false);
         gameManager.EndGame();
     }
 
@@ -68,10 +73,5 @@ public class UI_TimeText : UI_Container
         timer.SetMaxTime(gameRunTime);
         timer.ResetTimer();
         timer.Start();
-    }
-
-    internal void SetGameRunTimer(float gameRunTime)
-    {
-        throw new NotImplementedException();
     }
 }

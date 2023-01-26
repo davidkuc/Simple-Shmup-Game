@@ -82,6 +82,7 @@ public class GameManager : MonoBehaviour
         GameRunStarted?.Invoke();
     }
 
+    [ContextMenu("End Game")]
     public void EndGame()
     {
         isGameRunActive = false;
