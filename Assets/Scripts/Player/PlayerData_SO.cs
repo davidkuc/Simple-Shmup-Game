@@ -5,4 +5,5 @@ public class PlayerData_SO : ScriptableObject
 {
     public int BestScore;
     public int LatestScore;
+    public int CurrentScore;
 }

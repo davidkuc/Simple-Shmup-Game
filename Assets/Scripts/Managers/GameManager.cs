@@ -1,5 +1,4 @@
 using System;
-using TMPro;
 using UnityEngine;
 using Zenject;
 
@@ -60,6 +59,8 @@ public class GameManager : MonoBehaviour
     public void AddPointsToCurrentScore(int points)
     {
         pointSystem.AddPointsToCurrentScore(points);
+        pointSystem.SetLatestScoreToCurrentScore();
+        dataManager.UpdateData(pointSystem.GetNewPlayerScore());
         Debug.Log("Points added");
     }
 
@@ -75,6 +76,7 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         isGameRunActive = false;
+        pointSystem.ResetCurrentScore();
         dataManager.UpdateData(pointSystem.GetNewPlayerScore());
         dataManager.SaveData();
         GameRunEnded?.Invoke();

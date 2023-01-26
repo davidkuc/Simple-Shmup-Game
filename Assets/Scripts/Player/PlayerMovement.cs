@@ -30,4 +30,9 @@ public class PlayerMovement : MonoBehaviour
     {
         return up ? currentIndex + 1 > GameConstants.maxRowIndex : currentIndex - 1 < 0;
     }
+
+    public void ResetStats()
+    {
+        currentIndex = 2;
+    }
 }

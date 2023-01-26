@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHP: 3
   DMG: 1
+  PointsForDeath: 1

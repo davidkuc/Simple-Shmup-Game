@@ -79,6 +79,7 @@ public class Player : MonoBehaviour
     public void ResetStats()
     {
         hpSystem.ResetHP();
+        movement.ResetStats();
     }
 
     private void Die()

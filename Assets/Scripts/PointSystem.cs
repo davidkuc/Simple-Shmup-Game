@@ -14,21 +14,16 @@ public class PointSystem
         currentScore += points;
     }
 
-    public void SetCurrentScoreToLatestScore()
+    public void SetLatestScoreToCurrentScore()
     {
         latestScore = currentScore;
 
         if (latestScore > bestScore)
-            SetBestScore(latestScore);
-    }
-
-    public void SetBestScore(int points)
-    {
-        bestScore = points;
+            bestScore = latestScore;
     }
 
     public PlayerDataStructure GetNewPlayerScore()
     {
-        return new PlayerDataStructure() { LatestScore = latestScore, BestScore = bestScore };
+        return new PlayerDataStructure() { CurrentScore = currentScore, LatestScore = latestScore, BestScore = bestScore };
     }
 }

@@ -22,11 +22,12 @@ public class UI_BestScoreText : MonoBehaviour
     private void OnEnable()
     {
         dataManager.DataUpdated += UpdateText;
+        UpdateText();
     }
 
     private void OnDisable()
     {
-        dataManager.DataUpdated += UpdateText;
+        dataManager.DataUpdated -= UpdateText;
     }
 
     public void UpdateText()

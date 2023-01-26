@@ -1,9 +1,8 @@
-using System.Data;
 using TMPro;
 using UnityEngine;
 using Zenject;
 
-public class UI_LatestScoreText : MonoBehaviour
+public class UI_CurrentScoreText : MonoBehaviour
 {
     DataManager dataManager;
 
@@ -33,6 +32,6 @@ public class UI_LatestScoreText : MonoBehaviour
 
     public void UpdateText()
     {
-        text.text = dataManager.PlayerData_SO.LatestScore.ToString();
+        text.text = dataManager.PlayerData_SO.CurrentScore.ToString();
     }
 }
