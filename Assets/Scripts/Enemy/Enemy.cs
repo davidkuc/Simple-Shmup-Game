@@ -35,11 +35,11 @@ public class Enemy : MonoBehaviour
         if (collision.transform.CompareTag(GameConstants.PlayerTag))
         {
             DamagePlayer(player);
-            Die();
+            ReturnToPool();
         }
         else if (collision.transform.CompareTag(GameConstants.EnemyCatcherTag))
         {
-            Die();
+            ReturnToPool();
         }
     }
 

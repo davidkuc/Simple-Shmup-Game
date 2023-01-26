@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public event Action GameRunEnded;
     public event Action<int> CurrentScoreUpdated;
 
+    // In seconds
     [SerializeField] float gameRunTime;
 
     DataManager dataManager;
