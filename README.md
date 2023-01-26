@@ -9,7 +9,7 @@ Time spent on development:
 - 2 hours spent on documentation
 
 I've created a board in invision to visualise the game flow.
-Here is the link: https://davidkuc253194.invisionapp.com/freehand/Test-BLS-JRRw3ZW5k
+Here is the link: https://davidkuc253194.invisionapp.com/freehand/Simple-Shmup-Game-JRRw3ZW5k
 
 A preview of the game flow is in the below screen.
 
