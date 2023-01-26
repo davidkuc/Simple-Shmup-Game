@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -26,7 +25,6 @@ public class UI_TimeText : MonoBehaviour
     {
         if (timer.timerIsRunning)
         {
-            Debug.Log("Timer running!");
             timer.Tick(Time.deltaTime);
             text.text = timer.GetTimeText();
         }
@@ -36,12 +34,19 @@ public class UI_TimeText : MonoBehaviour
     {
         gameManager.GameRunStarted += StartTimer;
         gameManager.GameRunEnded += EndTimer;
+        timer.TimeFinished += OnTimeFinished;
     }
 
     private void OnDisable()
     {
         gameManager.GameRunStarted -= StartTimer;
         gameManager.GameRunEnded -= EndTimer;
+        timer.TimeFinished -= OnTimeFinished;
+    }
+
+    private void OnTimeFinished()
+    {
+        gameManager.EndGame();
     }
 
     private void EndTimer()

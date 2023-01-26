@@ -13,7 +13,6 @@ public class PlayerMovement : MonoBehaviour
 
         transform.position += new Vector3(0, stepDistance, 0);
         currentIndex++;
-        Debug.Log("Player Move up!");
     }
 
     public void MoveDown()
@@ -23,7 +22,6 @@ public class PlayerMovement : MonoBehaviour
 
         transform.position += new Vector3(0, -stepDistance, 0);
         currentIndex--;
-        Debug.Log("Player Move Down!");
     }
 
     private bool ReachedLimitRow(bool up)

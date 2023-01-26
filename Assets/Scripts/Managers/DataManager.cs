@@ -63,7 +63,6 @@ public class DataManager : MonoBehaviour
 
     public void UpdateData(PlayerDataStructure newPlayerDataStructure)
     {
-        Debug.Log($"Current Score --> {newPlayerDataStructure.CurrentScore}");
         MapPlayerDataStructureToPlayer_SO(newPlayerDataStructure);
         DataUpdated?.Invoke();
     }

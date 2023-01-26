@@ -61,7 +61,6 @@ public class GameManager : MonoBehaviour
         pointSystem.AddPointsToCurrentScore(points);
         pointSystem.SetLatestScoreToCurrentScore();
         dataManager.UpdateData(pointSystem.GetNewPlayerScore());
-        Debug.Log("Points added");
     }
 
     public void StartGame()

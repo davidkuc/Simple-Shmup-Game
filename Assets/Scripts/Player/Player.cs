@@ -1,8 +1,12 @@
+using System;
 using UnityEngine;
 using Zenject;
 
 public class Player : MonoBehaviour
 {
+    public event Action PlayerDamaged;
+    public event Action PlayerReset;
+
     [SerializeField] PlayerData_SO playerData_SO;
 
     GameManager gameManager;
@@ -13,6 +17,8 @@ public class Player : MonoBehaviour
     PlayerShooting shooting;
     PlayerMovement movement;
     HPSystem hpSystem;
+
+    public int CurrentHP => hpSystem.CurrentHP;
 
     [Inject]
     public void Setup(GameManager gameManager, DataManager dataManager, InputManager inputManager)
@@ -29,6 +35,12 @@ public class Player : MonoBehaviour
         hpSystem = new HPSystem();
 
         transform.position = SpawningManager.despawnPosition;
+    }
+
+    private void Start()
+    {
+        hpSystem.SetMaxHP(playerData_SO.MaxHP);
+        hpSystem.ResetHP();
     }
 
     private void OnEnable()
@@ -74,12 +86,17 @@ public class Player : MonoBehaviour
         hpSystem.TakeDamage(damage);
 
         if (hpSystem.IsDead) Die();
+
+        PlayerDamaged?.Invoke();
+        Debug.Log("Take dmg");
     }
 
     public void ResetStats()
     {
         hpSystem.ResetHP();
         movement.ResetStats();
+
+        PlayerReset?.Invoke();
     }
 
     private void Die()

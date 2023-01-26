@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public class Timer
 {
+    public event Action TimeFinished;
+
     public float maxTime = 10;
     public float timeRemaining;
     public bool timerIsRunning = false;
@@ -43,6 +46,8 @@ public class Timer
                 Debug.Log("Time has run out!");
                 timeRemaining = 0;
                 timerIsRunning = false;
+
+                TimeFinished?.Invoke();
             }
         }
     }
